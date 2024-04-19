@@ -37,6 +37,7 @@ with block:
     with gr.Row():
         with gr.Column():
             cloth_image = gr.Image(label="cloth Image", type="pil")
+            cloth_mask_image = gr.Image(label="cloth mask Image, if not support, will be produced by inner segment algorithm", type="pil")
             prompt = gr.Textbox(label="Prompt", value='a photography of a model')
             run_button = gr.Button(value="Run")
             with gr.Accordion("Advanced options", open=False):
@@ -52,6 +53,7 @@ with block:
 
         with gr.Column():
             result_gallery = gr.Gallery(label='Output', show_label=False, elem_id="gallery")
+            cloth_seg_image = gr.Image(label="cloth mask", type="pil", width=192, height=256)
 
     ips = [cloth_image, cloth_mask_image, prompt, a_prompt, n_prompt, num_samples, width, height, sample_steps, guidance_scale, cloth_guidance_scale, seed]
     run_button.click(fn=process, inputs=ips, outputs=[result_gallery, cloth_seg_image])
